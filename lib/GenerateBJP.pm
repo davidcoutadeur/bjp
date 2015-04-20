@@ -52,6 +52,9 @@ sub displayBJP {
   my $params = shift @_;
   my $script_path = shift @_;
 
+  # All parameters are facultative except uid
+  die "uid parameter not present" unless $params->{uuid};
+
   my $cal = $params->{"output-half"};
 
   $cal =~ s/\],/|/g;      # replacing dates separators (,) by |
@@ -80,7 +83,7 @@ sub displayBJP {
     client => {
       nom => $params->{cname},
       contact => "$params->{ccontactname} / $params->{ccontacttel}",
-      adresse => $params->{ccontactaddress},
+      adresse => $params->{ccontactaddress}."\n",
     },
     linagora => {
       responsable => $params->{umanager},
@@ -98,21 +101,24 @@ sub displayBJP {
 
   my $yaml_file = "latex/var/bjp-".time().".yml";
 
+  # Generate yaml file from received form information
   &generate_conf($conf, $yaml_file);
 
+  # Script getting yaml file and generating cartouche.tex and calendrier.tikz
   system($command, $latexScript, $yaml_file);
   if ( $? == -1 )
   {
     print STDERR "command failed: $!\n";
   }
 
+  # Generating pdf from all latex files bjp.tex includes cartouche and calendrier
   system("latexmk", "-gg", "-pdf", "-outdir=$script_path/latex", "latex/bjp.tex");
   if ( $? == -1 )
   {
     print STDERR "command failed: $!\n";
   }
 
-  return "bjp.pdf";
+  return "bjp-".$params->{uuid}."-".time().".pdf";
 }
 
 

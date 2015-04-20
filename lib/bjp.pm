@@ -32,9 +32,9 @@ any ['post'] => qr{^/bjp.*} => sub {
   my $file = &GenerateBJP::displayBJP($post, $script_path);
 
   return send_file(
-        $script_path."/latex/".$file,
+        $script_path."/latex/bjp.pdf",
         content_type => 'application/pdf',
-        filename => 'bjp.pdf',
+        filename => $file,
         system_path => 1
   );
 
