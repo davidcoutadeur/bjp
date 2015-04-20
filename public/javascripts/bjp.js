@@ -6,6 +6,11 @@ jQuery().ready(function() {
 
   var v = jQuery("#basicform").validate({
       rules: {
+        uuid: {
+          required: true,
+          minlength: 2,
+          maxlength: 30
+        },
         uname: {
           required: true,
           minlength: 2,

@@ -23,7 +23,8 @@ get '/hello/:name' => sub {
 };
 
 any ['get'] => qr{^/bjp.*} => sub {
-    template 'bjp.tt', { name => 'test' };
+    my $uid = request->header('Auth-User');
+    template 'bjp.tt', { uid => $uid };
 };
 
 any ['post'] => qr{^/bjp.*} => sub {
