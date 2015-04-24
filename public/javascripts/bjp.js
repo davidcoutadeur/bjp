@@ -134,4 +134,30 @@ jQuery().ready(function() {
     months: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
   });
 
+
+  var xmlhttp;
+  if  (window.ActiveXObject){//if the window is InternetExplorer
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }else if(window.XMLHttpRequest){// if Window is Firefox etc..
+    xmlhttp= new XMLHttpRequest();
+  }else{
+    alert ("Get a New Browser")
+  }
+
+
+  $( "#uname" ).keyup(function(myevent) {
+    var uid = $('#uuid').val();
+    var uname = $('#uname').val();
+    xmlhttp.onreadystatechange=function()
+    {
+      if (xmlhttp.readyState==4 && xmlhttp.status==200)
+      {
+        //alert( xmlhttp.responseText );
+      }
+    }
+    xmlhttp.open("GET","autocomplete/?uid="+uid+"&uname="+uname,true);
+    xmlhttp.send();
+  });
+
+
 });
