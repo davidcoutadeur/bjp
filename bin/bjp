@@ -1,0 +1,42 @@
+#!/usr/bin/env perl
+
+# Start/stop the bjp daemon.
+#
+### BEGIN INIT INFO
+# Provides:          bjp
+# Required-Start:    $syslog $time
+# Required-Stop:     $syslog $time
+# Should-Start:      $network $named
+# Should-Stop:       $network $named
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: Regular background program processing daemon
+# Description:       bjp is a UNIX program that starts a perl web application
+### END INIT INFO
+
+use warnings;
+use strict;
+use Daemon::Control;
+ 
+use Cwd qw(abs_path);
+ 
+Daemon::Control->new(
+    {
+        name      => "BJP",
+        lsb_start => '$syslog $remote_fs',
+        lsb_stop  => '$syslog',
+        lsb_sdesc => 'Launch BJP',
+        lsb_desc  => 'Launch BJP',
+        path      => '/opt/bjp',
+ 
+	program => '/usr/bin/perl',
+        program_args => [ '/opt/bjp/bin/app.pl' ],
+ 
+        pid_file    => '/var/run/bin.pid',
+        stderr_file => '/var/log/bjp.err',
+        stdout_file => '/var/log/bjp.log',
+ 
+        fork => 2,
+ 
+    }
+)->run;
