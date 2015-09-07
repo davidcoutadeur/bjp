@@ -27,7 +27,8 @@ Daemon::Control->new(
         lsb_stop  => '$syslog',
         lsb_sdesc => 'Launch BJP',
         lsb_desc  => 'Launch BJP',
-        path      => '/opt/bjp',
+        path      => '/opt/bjp/',
+        directory => '/opt/bjp/',
  
 	program => '/usr/bin/perl',
         program_args => [ '/opt/bjp/bin/app.pl' ],
