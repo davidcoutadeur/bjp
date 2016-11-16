@@ -5,7 +5,7 @@ For python script:
 apt-get install python-yaml python3-yaml
 
 For latex command:
-apt-get install texlive-lang-french texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra latexmk
+apt-get install texlive-lang-french texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra latexmk libfile-slurp-perl
 
 USAGE
 -----

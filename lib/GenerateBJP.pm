@@ -12,7 +12,7 @@ use warnings;
 use YAML::Syck;
 $YAML::Syck::ImplicitTyping = 1;
 $YAML::Syck::Headless = 1;
-
+use File::Slurp qw(read_file write_file);
 
 
 # Configuration section
@@ -77,6 +77,15 @@ sub displayBJP {
   # recreate the hash with the number of the day as key
   %cal = map { (localtime($_))[3] => $cal{$_} } keys %cal;
 
+  # Count days number
+  my $full_days = 0;
+  my $half_days = 0;
+  foreach my $key ( keys %cal ) {
+    $full_days++ if $cal{$key} =~ /OK/;
+    $half_days++ if $cal{$key} =~ /ma/ or $cal{$key} =~ /am/;
+  }
+  my $total_days = $full_days + $half_days / 2;
+
   my $calendar = \%cal;
 
   my $conf = {
@@ -110,6 +119,11 @@ sub displayBJP {
   {
     print STDERR "command failed: $!\n";
   }
+
+  # susbstitute days number
+  my $file_data = read_file 'latex/bjp.tex', {binmode => ':utf8'};
+  $file_data =~ s/Nombre de jours : [0-9.,]+/Nombre de jours : $total_days/g;
+  write_file 'latex/bjp.tex', {binmode => ':utf8'}, $file_data;
 
   # Generating pdf from all latex files bjp.tex includes cartouche and calendrier
   system("latexmk", "-gg", "-pdf", "-outdir=$script_path/latex", "latex/bjp.tex");
