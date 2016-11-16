@@ -109,18 +109,18 @@ with open ( 'latex/calendrier.tikz' , 'w' ) as tikz :
 
             if j[0] in bjp['calendrier'] :
                 if bjp['calendrier'][j[0]] == 'OK' :	# journée entière
-                    print ( '\\filldraw [ fill = yellow!100!blue!30 ] (' ,
+                    print ( '\\filldraw [ fill = orange!100!blue!30 ] (' ,
 			x , ',' , y , ') rectangle (' ,
 			x + 2 , ',' , y + 1 , ') ;' ,
 			file = tikz )
                 elif bjp['calendrier'][j[0]] == 'ma' :	# matin
-                    print ( '\\filldraw [ fill = yellow!100!blue!30 ] (' ,
+                    print ( '\\filldraw [ fill = orange!100!blue!30 ] (' ,
 			x , ',' , y , ') -- (' ,
 			x , ',' , y + 1 , ') -- (' ,
 			x + 2 , ',' , y + 1 , ') -- cycle ;' ,
 			file = tikz )
                 elif bjp['calendrier'][j[0]] == 'am' :	# après-midi
-                    print ( '\\filldraw [ fill = yellow!100!blue!30 ] (' ,
+                    print ( '\\filldraw [ fill = orange!100!blue!30 ] (' ,
 			x , ',' , y , ') -- (' ,
 			x + 2 , ',' , y , ') -- (' ,
 			x + 2 , ',' , y + 1 , ') -- cycle ;' ,
